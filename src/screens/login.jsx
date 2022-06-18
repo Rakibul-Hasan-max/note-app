@@ -9,8 +9,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../components/Button";
+import { colors } from "../theme/colors";
+import { spacing } from "../theme/spacing";
 
-export default function Login() {
+export default function Login({ navigation }) {
   return (
     <SafeAreaView>
       <Image
@@ -20,14 +22,14 @@ export default function Login() {
       <Text
         style={{
           textAlign: "center",
-          fontSize: 16,
+          fontSize: spacing[4],
           fontWeight: "500",
-          marginBottom: 20,
+          marginBottom: spacing[5],
         }}
       >
         "Never forget your notes"
       </Text>
-      <View style={{ padding: 16 }}>
+      <View style={{ padding: spacing[4] }}>
         <TextInput placeholder="Email" style={styles.input} />
         <TextInput
           placeholder="Password"
@@ -36,15 +38,21 @@ export default function Login() {
         />
         <Button
           title={"Login"}
-          customStyles={{ alignSelf: "center", marginTop: 40 }}
+          customStyles={{ alignSelf: "center", marginTop: spacing[10] }}
         />
       </View>
       <View style={styles.signup}>
         <Text style={{ marginRight: 10, fontWeight: "500" }}>
           Don't have an account?
         </Text>
-        <Pressable>
-          <Text style={{ color: "green", fontWeight: "700" }}>Sign up</Text>
+        <Pressable
+          onPress={() => {
+            navigation.navigate("Signup");
+          }}
+        >
+          <Text style={{ color: colors.green, fontWeight: "700" }}>
+            Sign up
+          </Text>
         </Pressable>
       </View>
     </SafeAreaView>
@@ -55,9 +63,9 @@ const styles = StyleSheet.create({
   input: {
     height: 48,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-    paddingHorizontal: 12,
-    marginBottom: 20,
+    borderBottomColor: colors.grey,
+    paddingHorizontal: spacing[3],
+    marginBottom: spacing[5],
   },
   signup: {
     flexDirection: "row",

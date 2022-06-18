@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./src/screens/home";
@@ -6,12 +5,13 @@ import Login from "./src/screens/login";
 import Signup from "./src/screens/signup";
 import Create from "./src/screens/create";
 import Edit from "./src/screens/edit";
+import { colors } from "./src/theme/colors";
 
 const AppTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: "#fff",
+    background: colors.white,
   },
 };
 
@@ -42,12 +42,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
