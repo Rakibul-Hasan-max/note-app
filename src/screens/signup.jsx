@@ -1,19 +1,15 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  TextInput,
-  StyleSheet,
-  Pressable,
-} from "react-native";
+import { useState } from "react";
+import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../components/Button";
 import { colors } from "../theme/colors";
 import { spacing } from "../theme/spacing";
 
+const genderOptions = ["Male", "Female"];
+
 export default function Signup() {
-  const selected = true;
+  const [gender, setGender] = useState(null);
 
   return (
     <SafeAreaView>
@@ -27,25 +23,34 @@ export default function Signup() {
         />
         <TextInput placeholder="Phone" style={styles.input} />
         <TextInput placeholder="Age" style={styles.input} />
-        <Pressable style={styles.radioContainer}>
-          <View style={styles.outerCircle}>
-            <View style={styles.innerCircle} />
-          </View>
-          <Text style={styles.radioText}>Male</Text>
-        </Pressable>
-        <Pressable style={styles.radioContainer}>
-          <View
-            style={[styles.outerCircle, selected && styles.selectedOuterCircle]}
-          >
-            <View
-              style={[
-                styles.innerCircle,
-                selected && styles.selectedInnerCircle,
-              ]}
-            />
-          </View>
-          <Text style={styles.radioText}>Female</Text>
-        </Pressable>
+
+        {/* radio button selection */}
+        {genderOptions.map((option) => {
+          const selected = option === gender;
+          return (
+            <Pressable
+              onPress={() => setGender(option)}
+              key={option}
+              style={styles.radioContainer}
+            >
+              <View
+                style={[
+                  styles.outerCircle,
+                  selected && styles.selectedOuterCircle,
+                ]}
+              >
+                <View
+                  style={[
+                    styles.innerCircle,
+                    selected && styles.selectedInnerCircle,
+                  ]}
+                />
+              </View>
+              <Text style={styles.radioText}>{option}</Text>
+            </Pressable>
+          );
+        })}
+
         <Button
           title={"Sign Up"}
           customStyles={{ alignSelf: "center", marginTop: spacing[10] }}
