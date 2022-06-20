@@ -6,6 +6,19 @@ import Signup from "./src/screens/signup";
 import Create from "./src/screens/create";
 import Edit from "./src/screens/edit";
 import { colors } from "./src/theme/colors";
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBCmaAsr41rMAKJvhxQzFXDOwNyeG0xQo0",
+  authDomain: "my-note-diary.firebaseapp.com",
+  projectId: "my-note-diary",
+  storageBucket: "my-note-diary.appspot.com",
+  messagingSenderId: "342188110353",
+  appId: "1:342188110353:web:2167f5d5091cddae6db7b0",
+  measurementId: "G-V1QY6NYW4N",
+};
+
+const app = initializeApp(firebaseConfig);
 
 const AppTheme = {
   ...DefaultTheme,

@@ -5,24 +5,62 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../components/Button";
 import { colors } from "../theme/colors";
 import { spacing } from "../theme/spacing";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+
+const auth = getAuth();
 
 const genderOptions = ["Male", "Female"];
 
 export default function Signup() {
   const [gender, setGender] = useState(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [age, setAge] = useState("");
+
+  const signup = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log("user created", user);
+      })
+
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  };
 
   return (
     <SafeAreaView>
       <View style={{ padding: spacing[4] }}>
-        <TextInput placeholder="Full Name" style={styles.input} />
-        <TextInput placeholder="Email" style={styles.input} />
         <TextInput
+          onChangeText={(text) => setName(text)}
+          placeholder="Full Name"
+          style={styles.input}
+        />
+        <TextInput
+          onChangeText={(text) => setEmail(text)}
+          placeholder="Email"
+          style={styles.input}
+        />
+        <TextInput
+          onChangeText={(text) => setPassword(text)}
           placeholder="Password"
           style={styles.input}
           secureTextEntry
         />
-        <TextInput placeholder="Phone" style={styles.input} />
-        <TextInput placeholder="Age" style={styles.input} />
+        <TextInput
+          onChangeText={(text) => setPhone(text)}
+          placeholder="Phone"
+          style={styles.input}
+        />
+        <TextInput
+          onChangeText={(text) => setAge(text)}
+          placeholder="Age"
+          style={styles.input}
+        />
 
         {/* radio button selection */}
         {genderOptions.map((option) => {
@@ -52,6 +90,7 @@ export default function Signup() {
         })}
 
         <Button
+          onPress={signup}
           title={"Sign Up"}
           customStyles={{ alignSelf: "center", marginTop: spacing[10] }}
         />
