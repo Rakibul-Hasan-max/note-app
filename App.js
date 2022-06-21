@@ -8,8 +8,10 @@ import Edit from "./src/screens/edit";
 import { colors } from "./src/theme/colors";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth } from "@firebase/auth";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import FlashMessage from "react-native-flash-message";
+import React, { useEffect } from "react";
+import { ActivityIndicator, View } from "react-native";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBCmaAsr41rMAKJvhxQzFXDOwNyeG0xQo0",
@@ -36,7 +38,29 @@ const AppTheme = {
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const user = false; //not authenticated
+  const [loading, setLoading] = React.useState(true);
+  const [user, setUser] = React.useState(null); //not authenticated
+
+  useEffect(() => {
+    const authSubscription = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        setLoading(false);
+      } else {
+        setUser(null);
+      }
+    });
+    return authSubscription;
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator color="blue" size="large" />
+      </View>
+    );
+  }
+
   return (
     <NavigationContainer theme={AppTheme}>
       <Stack.Navigator>
