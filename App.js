@@ -9,6 +9,7 @@ import { colors } from "./src/theme/colors";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "@firebase/auth";
+import FlashMessage from "react-native-flash-message";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBCmaAsr41rMAKJvhxQzFXDOwNyeG0xQo0",
@@ -56,6 +57,7 @@ export default function App() {
           </>
         )}
       </Stack.Navigator>
+      <FlashMessage position="top" />
     </NavigationContainer>
   );
 }

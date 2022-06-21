@@ -16,6 +16,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { showMessage } from "react-native-flash-message";
 
 const genderOptions = ["Male", "Female"];
 
@@ -46,6 +47,10 @@ export default function Signup() {
       console.log("result", result);
     } catch (error) {
       console.log("error", error);
+      showMessage({
+        message: "ERROR",
+        type: "danger"
+      });
     }
   };
 
