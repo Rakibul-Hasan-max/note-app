@@ -7,6 +7,7 @@ import {
   TextInput,
   StyleSheet,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../components/Button";
@@ -63,6 +64,19 @@ export default function Login({ navigation }) {
           style={styles.input}
           secureTextEntry
         />
+
+        {/* {error && <Text style={{ color: "red", marginTop: 10 }}>{error}</Text>} */}
+
+        {/* {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <Button
+            onPress={login}
+            title={"Login"}
+            customStyles={{ alignSelf: "center", marginTop: spacing[10] }}
+          />
+        )} */}
+
         <Button
           onPress={login}
           title={"Login"}
