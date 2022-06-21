@@ -1,4 +1,5 @@
-import React from "react";
+import { signInWithEmailAndPassword } from "@firebase/auth";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -11,8 +12,28 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../components/Button";
 import { colors } from "../theme/colors";
 import { spacing } from "../theme/spacing";
+import { auth } from "../../App";
 
 export default function Login({ navigation }) {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
+
+  const navigateToSignUp = () => {
+    navigation.navigate("Signup");
+  };
+
+  const login = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        console.log("successful login", res);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
   return (
     <SafeAreaView>
       <Image
@@ -30,13 +51,20 @@ export default function Login({ navigation }) {
         "Never forget your notes"
       </Text>
       <View style={{ padding: spacing[4] }}>
-        <TextInput placeholder="Email" style={styles.input} />
+        <TextInput
+          placeholder="Email"
+          onChangeText={(text) => setEmail(text)}
+          style={styles.input}
+          autoCapitalize="none"
+        />
         <TextInput
           placeholder="Password"
+          onChangeText={(text) => setPassword(text)}
           style={styles.input}
           secureTextEntry
         />
         <Button
+          onPress={login}
           title={"Login"}
           customStyles={{ alignSelf: "center", marginTop: spacing[10] }}
         />
@@ -45,11 +73,7 @@ export default function Login({ navigation }) {
         <Text style={{ marginRight: 10, fontWeight: "500" }}>
           Don't have an account?
         </Text>
-        <Pressable
-          onPress={() => {
-            navigation.navigate("Signup");
-          }}
-        >
+        <Pressable onPress={navigateToSignUp}>
           <Text style={{ color: colors.green, fontWeight: "700" }}>
             Sign up
           </Text>

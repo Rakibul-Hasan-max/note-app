@@ -20,15 +20,21 @@ import { showMessage } from "react-native-flash-message";
 
 const genderOptions = ["Male", "Female"];
 
-export default function Signup() {
+export default function Signup({ navigation }) {
   const [gender, setGender] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [age, setAge] = useState("");
+  const [loading, setLoading] = React.useState(true);
+
+  const navigateToLogin = () => {
+    navigation.navigate("Login");
+  };
 
   const signup = async () => {
+    setLoading(true);
     try {
       const result = await createUserWithEmailAndPassword(
         auth,
@@ -44,13 +50,15 @@ export default function Signup() {
         gender: gender,
         uid: result.user.uid,
       });
-      console.log("result", result);
+
+      setLoading(false);
     } catch (error) {
       console.log("error", error);
       showMessage({
         message: "ERROR",
-        type: "danger"
+        type: "danger",
       });
+      setLoading(false);
     }
   };
 
@@ -61,11 +69,13 @@ export default function Signup() {
           onChangeText={(text) => setName(text)}
           placeholder="Full Name"
           style={styles.input}
+          autoCapitalize="words"
         />
         <TextInput
           onChangeText={(text) => setEmail(text)}
           placeholder="Email"
           style={styles.input}
+          autoCapitalize="none"
         />
         <TextInput
           onChangeText={(text) => setPassword(text)}
@@ -121,7 +131,7 @@ export default function Signup() {
         <Text style={{ marginRight: 10, fontWeight: "500" }}>
           Already have an account?
         </Text>
-        <Pressable>
+        <Pressable onPress={navigateToLogin}>
           <Text style={{ color: colors.green, fontWeight: "700" }}>Login</Text>
         </Pressable>
       </View>

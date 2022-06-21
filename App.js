@@ -8,7 +8,7 @@ import Edit from "./src/screens/edit";
 import { colors } from "./src/theme/colors";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "@firebase/auth";
 import FlashMessage from "react-native-flash-message";
 import React, { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
@@ -41,6 +41,10 @@ export default function App() {
   const [loading, setLoading] = React.useState(true);
   const [user, setUser] = React.useState(null); //not authenticated
 
+  // React.useEffect(() => {
+  //   signOut(auth);
+  // });
+
   useEffect(() => {
     const authSubscription = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -48,6 +52,7 @@ export default function App() {
         setLoading(false);
       } else {
         setUser(null);
+        setLoading(false);
       }
     });
     return authSubscription;
@@ -66,7 +71,9 @@ export default function App() {
       <Stack.Navigator>
         {user ? (
           <>
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Home" component={Home}>
+              {/* {(props) => <Home {...props} user={user} />} */}
+            </Stack.Screen>
             <Stack.Screen name="Create" component={Create} />
             <Stack.Screen name="Edit" component={Edit} />
           </>
