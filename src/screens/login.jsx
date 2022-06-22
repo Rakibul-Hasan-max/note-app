@@ -31,6 +31,7 @@ export default function Login({ navigation }) {
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         console.log("successful login", res);
+        setLoading(false);
       })
       .catch((error) => {
         console.log("error", error);
