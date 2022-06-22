@@ -1,6 +1,13 @@
 import React from "react";
 import { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../components/Button";
 import { colors } from "../theme/colors";
@@ -27,7 +34,7 @@ export default function Signup({ navigation }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [age, setAge] = useState("");
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
 
   const navigateToLogin = () => {
     navigation.navigate("Login");
@@ -121,11 +128,15 @@ export default function Signup({ navigation }) {
           );
         })}
 
-        <Button
-          onPress={signup}
-          title={"Sign Up"}
-          customStyles={{ alignSelf: "center", marginTop: spacing[10] }}
-        />
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <Button
+            onPress={signup}
+            title={"Sign Up"}
+            customStyles={{ alignSelf: "center", marginTop: spacing[10] }}
+          />
+        )}
       </View>
       <View style={styles.signup}>
         <Text style={{ marginRight: 10, fontWeight: "500" }}>

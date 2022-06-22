@@ -20,7 +20,6 @@ export default function Login({ navigation }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  // const [error, setError] = React.useState(null);
 
   const navigateToSignUp = () => {
     navigation.navigate("Signup");
@@ -73,9 +72,7 @@ export default function Login({ navigation }) {
           secureTextEntry
         />
 
-        {/* {error && <Text style={{ color: "red", marginTop: 10 }}>{error}</Text>} */}
-
-        {/* {loading ? (
+        {loading ? (
           <ActivityIndicator />
         ) : (
           <Button
@@ -83,13 +80,7 @@ export default function Login({ navigation }) {
             title={"Login"}
             customStyles={{ alignSelf: "center", marginTop: spacing[10] }}
           />
-        )} */}
-
-        <Button
-          onPress={login}
-          title={"Login"}
-          customStyles={{ alignSelf: "center", marginTop: spacing[10] }}
-        />
+        )}
       </View>
       <View style={styles.signup}>
         <Text style={{ marginRight: 10, fontWeight: "500" }}>
