@@ -14,24 +14,31 @@ import Button from "../components/Button";
 import { colors } from "../theme/colors";
 import { spacing } from "../theme/spacing";
 import { auth } from "../../App";
+import { showMessage } from "react-native-flash-message";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState(null);
+  // const [error, setError] = React.useState(null);
 
   const navigateToSignUp = () => {
     navigation.navigate("Signup");
   };
 
   const login = () => {
+    setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         console.log("successful login", res);
       })
       .catch((error) => {
         console.log("error", error);
+        showMessage({
+          message: "Login Failed",
+          type: "danger",
+        });
+        setLoading(false);
       });
   };
 

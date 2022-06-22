@@ -55,7 +55,7 @@ export default function Signup({ navigation }) {
     } catch (error) {
       console.log("error", error);
       showMessage({
-        message: "ERROR",
+        message: "SignUp Invalid",
         type: "danger",
       });
       setLoading(false);
