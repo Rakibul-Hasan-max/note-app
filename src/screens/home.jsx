@@ -6,6 +6,7 @@ import { spacing } from "../theme/spacing";
 import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../../App";
 import { colors } from "../theme/colors";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function Home({ navigation, route, user }) {
   const [notes, setNotes] = useState([]);
@@ -39,6 +40,22 @@ export default function Home({ navigation, route, user }) {
           navigation.navigate("Edit", { item });
         }}
       >
+        <Pressable
+          style={{
+            position: "absolute",
+            alignSelf: "flex-end",
+            paddingVertical: 10,
+            paddingRight: 40,
+          }}
+        >
+          <FontAwesome name="edit" size={26} color="white" />
+        </Pressable>
+
+        <Pressable
+          style={{ position: "absolute", alignSelf: "flex-end", padding: 10 }}
+        >
+          <AntDesign name="delete" size={24} color="white" />
+        </Pressable>
         <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>
           {title}
         </Text>
