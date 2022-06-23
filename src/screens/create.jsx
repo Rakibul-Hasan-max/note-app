@@ -15,15 +15,13 @@ import { db } from "../../App";
 import { addDoc, collection } from "firebase/firestore";
 import { showMessage } from "react-native-flash-message";
 
-const noteColorOptions = ["red", "blue", "green"];
+const noteColorOptions = ["green", "orange", "blue", "purple"];
 
 export default function Create({ navigation, route, user }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [noteColor, setNoteColor] = useState("green");
   const [loading, setLoading] = useState(false);
-
-  console.log("user uid---->", user.uid);
 
   const onPressCreate = async () => {
     setLoading(true);
@@ -35,6 +33,11 @@ export default function Create({ navigation, route, user }) {
         uid: user.uid,
       });
       setLoading(false);
+      showMessage({
+        message: "Note added successfully",
+        type: "success",
+      });
+      navigation.goBack();
     } catch (error) {
       console.log("error", error);
       showMessage({

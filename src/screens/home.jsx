@@ -29,15 +29,19 @@ export default function Home({ navigation, route, user }) {
     return (
       <Pressable
         style={{
-          height: 60,
+          minHeight: 60,
           backgroundColor: color,
           marginBottom: 25,
-          borderRadius: 5,
-          alignItems: "center",
-          justifyContent: "center",
+          borderRadius: 15,
+          padding: 15,
         }}
       >
-        <Text style={{ fontSize: spacing[4], fontWeight: "bold", color: "white" }}>{title}</Text>
+        <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>
+          {title}
+        </Text>
+        <Text style={{ fontSize: 14, color: "white", marginTop: 5 }}>
+          {description}
+        </Text>
       </Pressable>
     );
   };
