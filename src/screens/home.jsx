@@ -1,12 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  FlatList,
+  ScrollView,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { spacing } from "../theme/spacing";
-import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../../App";
 import { colors } from "../theme/colors";
-import { FontAwesome } from "@expo/vector-icons";
 
 export default function Home({ navigation, route, user }) {
   const [notes, setNotes] = useState([]);
@@ -17,7 +32,7 @@ export default function Home({ navigation, route, user }) {
     const noteListener = onSnapshot(q, (querySnapshot) => {
       const list = [];
       querySnapshot.forEach((doc) => {
-        list.push(doc.data());
+        list.push({ ...doc.data(), id: doc.id });
       });
       setNotes(list);
     });
@@ -52,7 +67,15 @@ export default function Home({ navigation, route, user }) {
         </Pressable>
 
         <Pressable
-          style={{ position: "absolute", alignSelf: "flex-end", padding: 10 }}
+          style={{
+            position: "absolute",
+            alignSelf: "flex-end",
+            padding: 10,
+            zIndex: 4,
+          }}
+          onPress={() => {
+            deleteDoc(doc(db, "notes", item.id));
+          }}
         >
           <AntDesign name="delete" size={24} color="white" />
         </Pressable>
@@ -80,13 +103,25 @@ export default function Home({ navigation, route, user }) {
           <AntDesign name="pluscircleo" size={24} color="black" />
         </Pressable>
       </View>
-      <View>
-        <FlatList
-          data={notes}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.title}
-          contentContainerStyle={{ padding: 20 }}
-        />
+      <ScrollView>
+        <View>
+          <FlatList
+            data={notes}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.title}
+            contentContainerStyle={{ padding: 20 }}
+          />
+        </View>
+      </ScrollView>
+      <View
+        style={{
+          // position: "absolute",
+          alignSelf: "flex-end",
+          padding: 15,
+          zIndex: 4,
+        }}
+      >
+        <MaterialIcons name="logout" size={24} color="black" />
       </View>
     </SafeAreaView>
   );

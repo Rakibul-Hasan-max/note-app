@@ -8,8 +8,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { spacing } from "../theme/spacing";
-import { TextInput } from "react-native";
 import { colors } from "../theme/colors";
+import { TextInput } from "react-native";
 import Button from "../components/Button";
 import { db } from "../../App";
 import { doc, updateDoc } from "firebase/firestore";
@@ -25,16 +25,18 @@ export default function Edit({ navigation, route, user }) {
   const [loading, setLoading] = useState(false);
 
   const onPressEdit = async () => {
+    const noteRef = doc(db, "notes", noteItem.id);
+
     setLoading(true);
     try {
-    //   const docRef = doc(db, "notes", "title");
-
-    //   await updateDoc(docRef, {
-    //     capital: true,
-    //   });
+      await updateDoc(doc(db, "notes", noteItem.id), {
+        title: title,
+        description: description,
+        color: noteColor,
+      });
       setLoading(false);
       showMessage({
-        message: "Note added successfully",
+        message: "Note Updated successfully",
         type: "success",
       });
       navigation.goBack();
