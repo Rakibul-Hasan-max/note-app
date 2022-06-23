@@ -99,8 +99,8 @@ export default function Home({ navigation, route, user }) {
         <Text style={{ fontSize: spacing[5], fontWeight: "bold" }}>
           My Notes
         </Text>
-        <Pressable onPress={onPressCreate}>
-          <AntDesign name="pluscircleo" size={24} color="black" />
+        <Pressable>
+          <MaterialIcons name="logout" size={24} color="black" />
         </Pressable>
       </View>
       <ScrollView>
@@ -113,15 +113,10 @@ export default function Home({ navigation, route, user }) {
           />
         </View>
       </ScrollView>
-      <View
-        style={{
-          // position: "absolute",
-          alignSelf: "flex-end",
-          padding: 15,
-          zIndex: 4,
-        }}
-      >
-        <MaterialIcons name="logout" size={24} color="black" />
+      <View>
+        <Pressable onPress={onPressCreate} style={styles.createIcon}>
+          <AntDesign name="pluscircleo" size={spacing[10]} color="orange" />
+        </Pressable>
       </View>
     </SafeAreaView>
   );
@@ -133,5 +128,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "space-between",
     padding: 20,
+  },
+  createIcon: {
+    alignSelf: "flex-end",
+    paddingRight: 20,
+    paddingBottom: 20,
+    paddingTop: 5,
   },
 });
