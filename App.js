@@ -79,7 +79,9 @@ export default function App() {
               {(props) => <Create {...props} user={user} />}
             </Stack.Screen>
 
-            <Stack.Screen name="Edit" component={Edit} />
+            <Stack.Screen name="Edit">
+              {(props) => <Edit {...props} user={user} />}
+            </Stack.Screen>
           </>
         ) : (
           <>

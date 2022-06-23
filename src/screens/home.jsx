@@ -35,6 +35,9 @@ export default function Home({ navigation, route, user }) {
           borderRadius: 15,
           padding: 15,
         }}
+        onPress={() => {
+          navigation.navigate("Edit", { item });
+        }}
       >
         <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>
           {title}
