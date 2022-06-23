@@ -1,11 +1,46 @@
-import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign } from "@expo/vector-icons";
 import { spacing } from "../theme/spacing";
+import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../../App";
+import { colors } from "../theme/colors";
 
 export default function Home({ navigation, route, user }) {
-  console.log("object", user);
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    const q = query(collection(db, "notes"), where("uid", "==", user.uid));
+
+    const noteListener = onSnapshot(q, (querySnapshot) => {
+      const list = [];
+      querySnapshot.forEach((doc) => {
+        list.push(doc.data());
+      });
+      setNotes(list);
+    });
+
+    return noteListener;
+  }, []);
+
+  const renderItem = ({ item }) => {
+    const { title, description, color } = item;
+    return (
+      <Pressable
+        style={{
+          height: 60,
+          backgroundColor: color,
+          marginBottom: 25,
+          borderRadius: 5,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text style={{ fontSize: spacing[4], fontWeight: "bold", color: "white" }}>{title}</Text>
+      </Pressable>
+    );
+  };
 
   const onPressCreate = () => {
     navigation.navigate("Create");
@@ -20,6 +55,14 @@ export default function Home({ navigation, route, user }) {
         <Pressable onPress={onPressCreate}>
           <AntDesign name="pluscircleo" size={24} color="black" />
         </Pressable>
+      </View>
+      <View>
+        <FlatList
+          data={notes}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.title}
+          contentContainerStyle={{ padding: 20 }}
+        />
       </View>
     </SafeAreaView>
   );
