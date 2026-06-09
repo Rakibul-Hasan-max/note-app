@@ -104,7 +104,7 @@ Stores metadata of registered users.
 | `uid` | String | Unique ID mapped from Firebase Auth |
 | `name` | String | User's full name |
 | `email` | String | User's email address |
-| `password` | String | User's password (plain-text; *not recommended for production*) |
+| `password` | String | User's password |
 | `phone` | String | User's phone number |
 | `age` | String | User's age |
 | `gender` | String | User's gender (Male/Female) |
@@ -119,12 +119,3 @@ Stores all the notes created by users.
 | `color` | String | Background color theme (green, orange, blue, purple) |
 
 ---
-
-## 🛠️ Code Quality Suggestions & Future Roadmap
-
-After a code-level review, here are some recommendations to improve and secure the application:
-
-1.  **Password Security:** Avoid storing the plain text password in the `users` collection. Firebase Auth handles all authentication and credential details securely on its own.
-2.  **Missing Logout Functionality:** The logout icon in `home.jsx` is present but does not trigger the logout action. The `signOut(auth)` function should be bound to this Pressable.
-3.  **Form Validation:** Add client-side validation for email formats and enforce password constraints (e.g., minimum character length) before submitting forms.
-4.  **Offline Capability:** Configure Firestore's offline persistence so users can read and write notes even without an active internet connection.
