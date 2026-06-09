@@ -20,8 +20,9 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { db } from "../../App";
+import { db, auth } from "../../App";
 import { colors } from "../theme/colors";
+import { signOut } from "@firebase/auth";
 
 export default function Home({ navigation, route, user }) {
   const [notes, setNotes] = useState([]);
@@ -99,7 +100,7 @@ export default function Home({ navigation, route, user }) {
         <Text style={{ fontSize: spacing[5], fontWeight: "bold" }}>
           My Notes
         </Text>
-        <Pressable>
+        <Pressable onPress={() => signOut(auth)}>
           <MaterialIcons name="logout" size={24} color="black" />
         </Pressable>
       </View>
