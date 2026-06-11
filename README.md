@@ -119,3 +119,6 @@ Stores all the notes created by users.
 | `color` | String | Background color theme (green, orange, blue, purple) |
 
 ---
+
+
+upcoming features:
