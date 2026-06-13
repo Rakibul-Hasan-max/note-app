@@ -1,20 +1,38 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useColorScheme } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const systemScheme = useColorScheme();
-  const [theme, setTheme] = useState(systemScheme || "light");
+  const [theme, setTheme] = useState("light");
 
+  // Load saved theme on mount
   useEffect(() => {
-    if (systemScheme) {
-      setTheme(systemScheme);
-    }
+    const loadTheme = async () => {
+      try {
+        const savedTheme = await AsyncStorage.getItem("user_theme");
+        if (savedTheme !== null) {
+          setTheme(savedTheme);
+        } else if (systemScheme) {
+          setTheme(systemScheme);
+        }
+      } catch (error) {
+        console.log("Error loading theme", error);
+      }
+    };
+    loadTheme();
   }, [systemScheme]);
 
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  const toggleTheme = async () => {
+    try {
+      const newTheme = theme === "light" ? "dark" : "light";
+      setTheme(newTheme);
+      await AsyncStorage.setItem("user_theme", newTheme);
+    } catch (error) {
+      console.log("Error saving theme", error);
+    }
   };
 
   const isDark = theme === "dark";
