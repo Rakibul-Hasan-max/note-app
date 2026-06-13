@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { spacing } from "../theme/spacing";
@@ -105,8 +105,8 @@ export default function Home({ navigation, route, user }) {
         </Text>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Pressable onPress={toggleTheme} style={{ marginRight: 20 }}>
-            <MaterialIcons
-              name={isDark ? "light-mode" : "dark-mode"}
+            <Feather
+              name={isDark ? "sun" : "moon"}
               size={24}
               color={themeColors.iconColor}
             />
