@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   View,
   Text,
@@ -23,9 +23,12 @@ import {
 import { db, auth } from "../../App";
 import { colors } from "../theme/colors";
 import { signOut } from "@firebase/auth";
+import { ThemeContext } from "../theme/ThemeContext";
 
 export default function Home({ navigation, route, user }) {
   const [notes, setNotes] = useState([]);
+  const { theme, isDark, toggleTheme, colors: themeColors } = useContext(ThemeContext);
+
 
   useEffect(() => {
     const q = query(collection(db, "notes"), where("uid", "==", user.uid));
@@ -95,14 +98,23 @@ export default function Home({ navigation, route, user }) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: themeColors.background }}>
       <View style={styles.header}>
-        <Text style={{ fontSize: spacing[5], fontWeight: "bold" }}>
+        <Text style={{ fontSize: spacing[5], fontWeight: "bold", color: themeColors.text }}>
           My Notes
         </Text>
-        <Pressable onPress={() => signOut(auth)}>
-          <MaterialIcons name="logout" size={24} color="black" />
-        </Pressable>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Pressable onPress={toggleTheme} style={{ marginRight: 20 }}>
+            <MaterialIcons
+              name={isDark ? "light-mode" : "dark-mode"}
+              size={24}
+              color={themeColors.iconColor}
+            />
+          </Pressable>
+          <Pressable onPress={() => signOut(auth)}>
+            <MaterialIcons name="logout" size={24} color={themeColors.iconColor} />
+          </Pressable>
+        </View>
       </View>
       <ScrollView>
         <View>

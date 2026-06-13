@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -24,6 +23,8 @@ import {
   where,
 } from "firebase/firestore";
 import { showMessage } from "react-native-flash-message";
+import { ThemeContext } from "../theme/ThemeContext";
+
 
 const genderOptions = ["Male", "Female"];
 
@@ -35,6 +36,8 @@ export default function Signup({ navigation }) {
   const [phone, setPhone] = useState("");
   const [age, setAge] = useState("");
   const [loading, setLoading] = React.useState(false);
+  const { colors: themeColors } = useContext(ThemeContext);
+
 
   const navigateToLogin = () => {
     navigation.navigate("Login");
@@ -70,35 +73,40 @@ export default function Signup({ navigation }) {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1, backgroundColor: themeColors.background }}>
       <View style={{ padding: spacing[4] }}>
         <TextInput
           onChangeText={(text) => setName(text)}
           placeholder="Full Name"
-          style={styles.input}
+          placeholderTextColor={themeColors.placeholder}
+          style={[styles.input, { color: themeColors.text, borderBottomColor: themeColors.inputBorder }]}
           autoCapitalize="words"
         />
         <TextInput
           onChangeText={(text) => setEmail(text)}
           placeholder="Email"
-          style={styles.input}
+          placeholderTextColor={themeColors.placeholder}
+          style={[styles.input, { color: themeColors.text, borderBottomColor: themeColors.inputBorder }]}
           autoCapitalize="none"
         />
         <TextInput
           onChangeText={(text) => setPassword(text)}
           placeholder="Password"
-          style={styles.input}
+          placeholderTextColor={themeColors.placeholder}
+          style={[styles.input, { color: themeColors.text, borderBottomColor: themeColors.inputBorder }]}
           secureTextEntry
         />
         <TextInput
           onChangeText={(text) => setPhone(text)}
           placeholder="Phone"
-          style={styles.input}
+          placeholderTextColor={themeColors.placeholder}
+          style={[styles.input, { color: themeColors.text, borderBottomColor: themeColors.inputBorder }]}
         />
         <TextInput
           onChangeText={(text) => setAge(text)}
           placeholder="Age"
-          style={styles.input}
+          placeholderTextColor={themeColors.placeholder}
+          style={[styles.input, { color: themeColors.text, borderBottomColor: themeColors.inputBorder }]}
         />
 
         {/* radio button selection */}
@@ -113,17 +121,19 @@ export default function Signup({ navigation }) {
               <View
                 style={[
                   styles.outerCircle,
+                  { borderColor: themeColors.border },
                   selected && styles.selectedOuterCircle,
                 ]}
               >
                 <View
                   style={[
                     styles.innerCircle,
+                    { borderColor: themeColors.border },
                     selected && styles.selectedInnerCircle,
                   ]}
                 />
               </View>
-              <Text style={styles.radioText}>{option}</Text>
+              <Text style={[styles.radioText, { color: themeColors.text }]}>{option}</Text>
             </Pressable>
           );
         })}
@@ -139,7 +149,7 @@ export default function Signup({ navigation }) {
         )}
       </View>
       <View style={styles.signup}>
-        <Text style={{ marginRight: 10, fontWeight: "500" }}>
+        <Text style={{ marginRight: 10, fontWeight: "500", color: themeColors.text }}>
           Already have an account?
         </Text>
         <Pressable onPress={navigateToLogin}>
@@ -147,6 +157,7 @@ export default function Signup({ navigation }) {
         </Pressable>
       </View>
     </SafeAreaView>
+
   );
 }
 

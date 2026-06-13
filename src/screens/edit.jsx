@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import Button from "../components/Button";
 import { db } from "../../App";
 import { doc, updateDoc } from "firebase/firestore";
 import { showMessage } from "react-native-flash-message";
+import { ThemeContext } from "../theme/ThemeContext";
 
 const noteColorOptions = ["green", "orange", "blue", "purple"];
 
@@ -23,6 +24,8 @@ export default function Edit({ navigation, route, user }) {
   const [description, setDescription] = useState(noteItem.description);
   const [noteColor, setNoteColor] = useState(noteItem.color);
   const [loading, setLoading] = useState(false);
+  const { colors: themeColors } = useContext(ThemeContext);
+
 
   const onPressEdit = async () => {
     const noteRef = doc(db, "notes", noteItem.id);
@@ -51,23 +54,25 @@ export default function Edit({ navigation, route, user }) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, marginHorizontal: 20 }}>
+    <SafeAreaView style={{ flex: 1, paddingHorizontal: 20, backgroundColor: themeColors.background }}>
       <TextInput
         placeholder="Title"
+        placeholderTextColor={themeColors.placeholder}
         onChangeText={(text) => setTitle(text)}
-        style={styles.input}
+        style={[styles.input, { color: themeColors.text, borderBottomColor: themeColors.inputBorder }]}
         value={title}
       />
       <TextInput
         placeholder="Description"
+        placeholderTextColor={themeColors.placeholder}
         multiline={true}
         onChangeText={(text) => setDescription(text)}
-        style={styles.input}
+        style={[styles.input, { color: themeColors.text, borderBottomColor: themeColors.inputBorder }]}
         value={description}
       />
 
       <View>
-        <Text style={{ marginTop: 50, marginBottom: 20 }}>Note Theme</Text>
+        <Text style={{ marginTop: 50, marginBottom: 20, color: themeColors.text }}>Note Theme</Text>
         {noteColorOptions.map((option) => {
           const selected = option === noteColor;
           return (
@@ -81,17 +86,19 @@ export default function Edit({ navigation, route, user }) {
               <View
                 style={[
                   styles.outerCircle,
+                  { borderColor: themeColors.border },
                   selected && styles.selectedOuterCircle,
                 ]}
               >
                 <View
                   style={[
                     styles.innerCircle,
+                    { borderColor: themeColors.border },
                     selected && styles.selectedInnerCircle,
                   ]}
                 />
               </View>
-              <Text style={styles.radioText}>{option}</Text>
+              <Text style={[styles.radioText, { color: themeColors.text }]}>{option}</Text>
             </Pressable>
           );
         })}

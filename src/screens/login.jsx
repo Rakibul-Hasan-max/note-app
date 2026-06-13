@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword } from "@firebase/auth";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -15,11 +15,14 @@ import { colors } from "../theme/colors";
 import { spacing } from "../theme/spacing";
 import { auth } from "../../App";
 import { showMessage } from "react-native-flash-message";
+import { ThemeContext } from "../theme/ThemeContext";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const { colors: themeColors } = useContext(ThemeContext);
+
 
   const navigateToSignUp = () => {
     navigation.navigate("Signup");
@@ -43,7 +46,7 @@ export default function Login({ navigation }) {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1, backgroundColor: themeColors.background }}>
       <Image
         source={require("../../assets/login.png")}
         style={{ width: 350, height: 250, alignSelf: "center" }}
@@ -54,6 +57,7 @@ export default function Login({ navigation }) {
           fontSize: spacing[4],
           fontWeight: "500",
           marginBottom: spacing[5],
+          color: themeColors.text,
         }}
       >
         "Never forget your notes"
@@ -61,14 +65,16 @@ export default function Login({ navigation }) {
       <View style={{ padding: spacing[4] }}>
         <TextInput
           placeholder="Email"
+          placeholderTextColor={themeColors.placeholder}
           onChangeText={(text) => setEmail(text)}
-          style={styles.input}
+          style={[styles.input, { color: themeColors.text, borderBottomColor: themeColors.inputBorder }]}
           autoCapitalize="none"
         />
         <TextInput
           placeholder="Password"
+          placeholderTextColor={themeColors.placeholder}
           onChangeText={(text) => setPassword(text)}
-          style={styles.input}
+          style={[styles.input, { color: themeColors.text, borderBottomColor: themeColors.inputBorder }]}
           secureTextEntry
         />
 
@@ -83,7 +89,7 @@ export default function Login({ navigation }) {
         )}
       </View>
       <View style={styles.signup}>
-        <Text style={{ marginRight: 10, fontWeight: "500" }}>
+        <Text style={{ marginRight: 10, fontWeight: "500", color: themeColors.text }}>
           Don't have an account?
         </Text>
         <Pressable onPress={navigateToSignUp}>
@@ -93,6 +99,7 @@ export default function Login({ navigation }) {
         </Pressable>
       </View>
     </SafeAreaView>
+
   );
 }
 
